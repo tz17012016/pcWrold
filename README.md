@@ -2,12 +2,10 @@
 
  This is the finale project for my web bootcamp,
  an eCommerce platform built with the MERN stack & Redux.
- 
-# Demo server
- heare you can visit the server of pcWrold in heroku => https://pcwrold.herokuapp.com/
+
  
 # Demo site
- heare you can visit the "pcWrold" in netlify => https://pcwrold.netlify.app/
+ heare you can visit the "pcWrold" in heroku => https://pcwrold.herokuapp.com/
 
 # Features
 * Full featured shopping cart
