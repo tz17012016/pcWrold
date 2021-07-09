@@ -1,0 +1,61 @@
+{
+  "name": "frontend",
+  "proxy": "http://127.0.0.1:5010",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@david.kucsai/react-pdf-table": "^0.3.0",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "@react-pdf/renderer": "^2.0.13",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "antd": "^4.15.6",
+    "axios": "^0.20.0",
+    "babel-plugin-styled-components": "^1.12.0",
+    "bootstrap": "4.6.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "lodash": "^4.17.21",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.6.0",
+    "react-datepicker": "^3.8.0",
+    "react-dom": "^16.13.1",
+    "react-helmet": "^6.1.0",
+    "react-image-file-resizer": "^0.4.4",
+    "react-paypal-button-v2": "^2.6.2",
+    "react-redux": "^7.2.1",
+    "react-router-bootstrap": "^0.25.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "react-scroll-parallax": "^2.4.0",
+    "react-to-print": "^2.12.5",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^5.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app",
+    "plugin":"react-hooks/recommended"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
