@@ -8,14 +8,11 @@ import { saveShippingAddress } from '../actions/cartActions';
 const ShippingScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
-
   const [address, setAddress] = useState(shippingAddress.address);
   const [city, setCity] = useState(shippingAddress.city);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
-
   const dispatch = useDispatch();
-
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
@@ -38,7 +35,6 @@ const ShippingScreen = ({ history }) => {
               required
               onChange={(e) => setAddress(e.target.value)}></Form.Control>
           </Form.Group>
-
           <Form.Group controlId='city'>
             <Form.Label>עיר</Form.Label>
             <Form.Control
@@ -49,7 +45,6 @@ const ShippingScreen = ({ history }) => {
               required
               onChange={(e) => setCity(e.target.value)}></Form.Control>
           </Form.Group>
-
           <Form.Group controlId='postalCode'>
             <Form.Label>מיקוד</Form.Label>
             <Form.Control
@@ -60,7 +55,6 @@ const ShippingScreen = ({ history }) => {
               required
               onChange={(e) => setPostalCode(e.target.value)}></Form.Control>
           </Form.Group>
-
           <Form.Group controlId='country'>
             <Form.Label>מדינה</Form.Label>
             <Form.Control
@@ -71,7 +65,6 @@ const ShippingScreen = ({ history }) => {
               required
               onChange={(e) => setCountry(e.target.value)}></Form.Control>
           </Form.Group>
-
           <Button type='submit' variant='primary'>
             המשך
           </Button>

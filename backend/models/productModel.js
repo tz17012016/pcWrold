@@ -46,10 +46,6 @@ const productSchema = mongoose.Schema(
         ref: 'Sub',
       },
     ],
-    shipping: {
-      type: String,
-      enum: ['Yes', 'No'],
-    },
     description: {
       type: String,
       required: true,
@@ -65,10 +61,6 @@ const productSchema = mongoose.Schema(
       type: Number,
       required: true,
       default: 0,
-    },
-    color: {
-      type: String,
-      enum: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
     },
     price: {
       type: Number,

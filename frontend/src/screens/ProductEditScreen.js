@@ -17,7 +17,6 @@ const { Option } = Select;
 
 const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id;
-
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState('');
@@ -31,17 +30,12 @@ const ProductEditScreen = ({ match, history }) => {
   const [subOptions, setSubOptions] = useState([]);
   const [arrayOfSubs, setArrayOfSubs] = useState([]);
   const dispatch = useDispatch();
-  console.log(arrayOfSubs);
-
   const CategoryList = useSelector((state) => ({ ...state.CategoryList }));
   const { categories } = CategoryList;
-
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
-
   const subsList = useSelector((state) => ({ ...state.subsList }));
   const { subs } = subsList;
-  console.log(subId);
   const productUpdate = useSelector((state) => state.productUpdate);
   const {
     loading: loadingUpdate,
@@ -57,19 +51,6 @@ const ProductEditScreen = ({ match, history }) => {
       loadCategories();
       loadSubs();
       loadProduct();
-
-      /*if (!product.name || product._id !== productId) {
-        dispatch(listProductDetails(productId));
-      } else {
-        setName(product.name);
-        setPrice(product.price);
-        setImage(product.image);
-        setBrand(product.brand);
-        setCategoryId(product.category);
-        setsubId(product.subs);
-        setCountInStock(product.countInStock);
-        setDescription(product.description);
-      }*/
     }
   }, [dispatch, product]);
   const loadProduct = () => {
@@ -77,21 +58,13 @@ const ProductEditScreen = ({ match, history }) => {
       dispatch(listProductDetails(productId));
       setsubId(product.subs);
       setSubOptions(subId);
-
-      // console.log("single product", p);
-      // 1 load single proudct
-      // 2 load single product category subs
       dispatch(getCategorySubs(subId));
-
-      //setSubOptions(product.subs); // on first load, show default subs
-
-      // 3 prepare array of sub ids to show as default sub values in antd Select
       let arr = [];
       subs.map((s) => {
         arr.push(s._id);
       });
       console.log('ARR', arr);
-      setArrayOfSubs((prev) => arr); // required for ant design select to work
+      setArrayOfSubs((prev) => arr);
     } else {
       setName(product.name);
       setPrice(product.price);
@@ -116,16 +89,13 @@ const ProductEditScreen = ({ match, history }) => {
     const formData = new FormData();
     formData.append('image', file);
     setUploading(true);
-
     try {
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       };
-
       const { data } = await axios.post('/api/upload', formData, config);
-
       setImage(data);
       setUploading(false);
     } catch (error) {
@@ -136,22 +106,13 @@ const ProductEditScreen = ({ match, history }) => {
 
   const handleCatagoryChange = (e) => {
     e.preventDefault();
-    console.log('CLICKED CATEGORY', e.target.value);
-
     setSelectedCategory(e.target.value);
     dispatch(getCategorySubs(e.target.value));
-    console.log('SUB OPTIONS ON CATGORY CLICK', e.target.value);
     setSubOptions(e.target.value);
-
-    console.log('EXISTING CATEGORY CategoryId', product.category);
-
-    // if user clicks back to the original category
-    // show its sub categories in default
     if (product.category === e.target.value) {
       setsubId([]);
       loadProduct();
     }
-    // clear old sub category ids
     setArrayOfSubs([]);
     setsubId([]);
   };
@@ -270,7 +231,6 @@ const ProductEditScreen = ({ match, history }) => {
                         ))}
                     </Form.Control>
                   </Form.Group>
-
                   <Form.Group controlId='selectsub'>
                     <Form.Label>select subs</Form.Label>
                     <div>
@@ -294,7 +254,6 @@ const ProductEditScreen = ({ match, history }) => {
                       </Select>
                     </div>
                   </Form.Group>
-
                   <Button type='submit' variant='primary'>
                     Update
                   </Button>

@@ -15,7 +15,6 @@ import {
 } from './reducers/productReducers';
 import { cartReducer } from './reducers/cartReducers';
 import { drawerReducer } from './reducers/drawerReducer';
-import themeReducer from './reducers/themeReducers';
 import {
   CreateCouponReducer,
   RemoveCouponReducer,
@@ -103,7 +102,6 @@ const reducer = combineReducers({
   UserWishlist: getUserWishlistReducer,
   addToWishlist: addToWishlistReducer,
   removeWishlist: removeWishlistReducer,
-  themeSelector: themeReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')

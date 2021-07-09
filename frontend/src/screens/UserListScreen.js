@@ -9,13 +9,10 @@ import AdminNav from '../components/nav/AdminNav';
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
-
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
-
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
   const userDelete = useSelector((state) => state.userDelete);
   const { success: successDelete } = userDelete;
 
@@ -28,7 +25,7 @@ const UserListScreen = ({ history }) => {
   }, [dispatch, history, successDelete, userInfo]);
 
   const deleteHandler = (id) => {
-    if (window.confirm('Are you sure')) {
+    if (window.confirm('האם אתה בטוח?')) {
       dispatch(deleteUser(id));
     }
   };

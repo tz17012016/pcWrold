@@ -13,12 +13,9 @@ const RegisterScreen = ({ location, history }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);
-
   const dispatch = useDispatch();
-
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
-
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
@@ -53,7 +50,6 @@ const RegisterScreen = ({ location, history }) => {
               value={name}
               onChange={(e) => setName(e.target.value)}></Form.Control>
           </Form.Group>
-
           <Form.Group controlId='email'>
             <Form.Label>מייל</Form.Label>
             <Form.Control
@@ -63,7 +59,6 @@ const RegisterScreen = ({ location, history }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}></Form.Control>
           </Form.Group>
-
           <Form.Group controlId='password'>
             <Form.Label>סיסמה</Form.Label>
             <Form.Control
@@ -72,7 +67,6 @@ const RegisterScreen = ({ location, history }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}></Form.Control>
           </Form.Group>
-
           <Form.Group controlId='confirmPassword'>
             <Form.Label>חזור שנית על הסיסמה</Form.Label>
             <Form.Control
@@ -84,12 +78,10 @@ const RegisterScreen = ({ location, history }) => {
                 setConfirmPassword(e.target.value)
               }></Form.Control>
           </Form.Group>
-
           <Button type='submit' variant='primary'>
             הרשם
           </Button>
         </Form>
-
         <Row className='py-3'>
           <Col>
             יש לך כבר חשבון ?{' '}

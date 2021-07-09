@@ -1,19 +1,13 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Image } from 'react-bootstrap';
-import Product from '../components/Product';
+import { Row, Col } from 'react-bootstrap';
 import Message from '../components/Message';
-import Loader from '../components/Loader';
 import PaginateHome from '../components/PaginateHome';
 import ProductCarousel from '../components/ProductCarousel';
 import Meta from '../components/Meta';
 import { listProducts } from '../actions/productActions';
-import { Route } from 'react-router-dom';
-import SearchBox from '../components/SearchBox';
 import { Container } from 'react-bootstrap';
-import LoadingCard from '../components/LoadingCard';
-import SkeletonElement from '../skeletons/SkeletonElement';
 import SkeletonCard from '../skeletons/SkeletonCard';
 import ProductCard from '../components/cards/productCard';
 
@@ -85,5 +79,3 @@ const HomeScreen = ({ match }) => {
 };
 
 export default HomeScreen;
-
-//<Product product={product} />

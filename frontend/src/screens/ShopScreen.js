@@ -3,20 +3,16 @@ import { listProducts, fetchProductsByFilter } from '../actions/productActions';
 import { getCategories } from '../actions/categoryActions';
 import { getSubs } from '../actions/subActions';
 import { useSelector, useDispatch } from 'react-redux';
-import { Menu, Slider, Checkbox, Radio } from 'antd';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Menu, Slider, Checkbox } from 'antd';
+import { Row, Col } from 'react-bootstrap';
 import { DollarOutlined, DownSquareOutlined } from '@ant-design/icons';
 import ProductCard from '../components/cards/productCard';
 import SkeletonCard from '../skeletons/SkeletonCard';
-import _ from 'lodash';
-import { useTraceUpdate } from '../components/useTraceUpdate';
 const { SubMenu } = Menu;
 
 const ShopScreen = ({ match }) => {
   const pageNumber = match.params.pageNumber || 1;
   const [categorySlug, setCategorySlug] = useState(match.params.slug || '');
-  console.log(categorySlug);
-
   const [products1, setProducts1] = useState([]);
   const [products2, setProducts2] = useState([]);
   const [price, setPrice] = useState([0, 0]);
@@ -30,7 +26,6 @@ const ShopScreen = ({ match }) => {
   const productList = useSelector((state) => state.productList);
   const { error, products, loading } = productList;
   const [change, setChange] = useState(false);
-  console.log(change);
   const [page, setPage] = useState(0);
   const [pages, setPages] = useState(0);
   let { search } = useSelector((state) => ({ ...state }));
@@ -70,14 +65,14 @@ const ShopScreen = ({ match }) => {
     });
   };
 
-  // 1. load products by default on page load
   const loadAllProducts = () => {
     dispatch(listProducts('', pageNumber));
   };
+
   const loadAllProducts2 = () => {
     setProducts2(products);
   };
-  // 2. load products on user search input
+
   useEffect(() => {
     const delayed = setTimeout(() => {
       fetchProducts({ query: text });
@@ -88,7 +83,6 @@ const ShopScreen = ({ match }) => {
     return () => clearTimeout(delayed);
   }, [text]);
 
-  // 3. load products based on price range
   useEffect(() => {
     fetchProducts({ price });
   }, [ok]);
@@ -99,7 +93,6 @@ const ShopScreen = ({ match }) => {
       payload: { text: '' },
     });
 
-    // reset
     setCategoryIds([]);
     setPrice(value);
     setTimeout(() => {
@@ -107,8 +100,6 @@ const ShopScreen = ({ match }) => {
     }, 1500);
   };
 
-  // 4. load products based on category
-  // show categories in a list of checkbox
   const showCategories = () =>
     categories.map((c) => (
       <div key={c._id}>
@@ -124,9 +115,7 @@ const ShopScreen = ({ match }) => {
       </div>
     ));
 
-  // handle check for categories
   const handleCheck = (e) => {
-    // reset
     dispatch({
       type: 'SEARCH_QUERY',
       payload: { text: '' },
@@ -134,12 +123,10 @@ const ShopScreen = ({ match }) => {
     setPrice([0, 0]);
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
-    let foundInTheState = inTheState.indexOf(justChecked); // index or -1
-    // indexOf method ?? if not found returns -1 else return index [1,2,3,4,5]
+    let foundInTheState = inTheState.indexOf(justChecked);
     if (foundInTheState === -1) {
       inTheState.push(justChecked);
     } else {
-      // if found pull out one item from index
       inTheState.splice(foundInTheState, 1);
     }
     setCategoryIds(inTheState);
@@ -153,8 +140,6 @@ const ShopScreen = ({ match }) => {
       tempId = Mslug._id;
     }
     if (tempId != '') {
-      console.log('run 11');
-      // reset
       dispatch({
         type: 'SEARCH_QUERY',
         payload: { text: '' },
@@ -163,13 +148,10 @@ const ShopScreen = ({ match }) => {
       let inTheState = [];
       inTheState = categoryIds;
       let justChecked = tempId;
-      let foundInTheState = inTheState.indexOf(justChecked); // index or -1
-      console.log(foundInTheState);
-      // indexOf method ?? if not found returns -1 else return index [1,2,3,4,5]
+      let foundInTheState = inTheState.indexOf(justChecked);
       if (foundInTheState === -1) {
         inTheState.push(justChecked);
       } else {
-        // if found pull out one item from index
         inTheState.splice(foundInTheState, 1);
       }
       setCategoryIds(inTheState);
@@ -177,7 +159,7 @@ const ShopScreen = ({ match }) => {
       setChange(true);
     }
   };
-  // 6. show products by sub category
+
   const showSubs = () =>
     subs.map((s) => (
       <div
@@ -338,9 +320,7 @@ const ShopScreen = ({ match }) => {
         <div className='col-md-3 pt-3'>
           <h4>Search/Filter</h4>
           <hr />
-
           <Menu defaultOpenKeys={['1', '2', '4']} mode='inline'>
-            {/* price */}
             <SubMenu
               key='1'
               title={
@@ -359,8 +339,6 @@ const ShopScreen = ({ match }) => {
                 />
               </div>
             </SubMenu>
-
-            {/* category */}
             <SubMenu
               key='2'
               title={
@@ -370,8 +348,6 @@ const ShopScreen = ({ match }) => {
               }>
               <div style={{ maringTop: '-10px' }}>{showCategories()}</div>
             </SubMenu>
-
-            {/* sub category */}
             <SubMenu
               key='4'
               title={

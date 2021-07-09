@@ -14,13 +14,10 @@ const ProfileScreen = ({ location, history, match }) => {
   const [email, setEmail] = useState('');
 
   const dispatch = useDispatch();
-
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
-
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
 
@@ -87,7 +84,6 @@ const ProfileScreen = ({ location, history, match }) => {
                                 setEmail(e.target.value)
                               }></Form.Control>
                           </Form.Group>
-
                           <Button type='submit' variant='primary'>
                             עדכן
                           </Button>

@@ -1,31 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Comment,
-  Card,
-  Image,
-  Avatar,
-  List,
-  Input,
-  Descriptions,
-  Tooltip,
-} from 'antd';
-import moment from 'moment';
+import { Card, Image, Avatar, Tooltip } from 'antd';
 import {
   HeartTwoTone,
   PlusSquareTwoTone,
   ShoppingCartOutlined,
 } from '@ant-design/icons';
-import {
-  Row,
-  Col,
-  ListGroup,
-  Button,
-  Form,
-  Container,
-  Breadcrumb,
-} from 'react-bootstrap';
+import { Row, Col, ListGroup, Button, Form } from 'react-bootstrap';
 import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -47,15 +29,11 @@ const ProductScreen = ({ history, match }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [tooltip, setTooltip] = useState('הוסף לסל');
-
   const dispatch = useDispatch();
-
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
-
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
   const productReviewCreate = useSelector((state) => state.productReviewCreate);
   const {
     success: successProductReview,
@@ -124,7 +102,6 @@ const ProductScreen = ({ history, match }) => {
                       <ShoppingCartOutlined className='text-danger' /> <br />
                       {product.countInStock < 1 ? 'חסר במלאי' : 'קנה עכשיו'}
                     </div>,
-
                     <div onClick={addToWhishHandler}>
                       <HeartTwoTone twoToneColor='#eb2f96' /> <br />
                       {product.countInStock < 1 ? 'חסר במלאי' : 'הוסף למעודפים'}
@@ -156,7 +133,6 @@ const ProductScreen = ({ history, match }) => {
                         <Col>:מחיר</Col>
                       </Row>
                     </ListGroup.Item>
-
                     <ListGroup.Item>
                       <Row>
                         <Col>
@@ -165,7 +141,6 @@ const ProductScreen = ({ history, match }) => {
                         <Col>:מצב</Col>
                       </Row>
                     </ListGroup.Item>
-
                     {product.countInStock > 0 && (
                       <ListGroup.Item>
                         <Row>
@@ -199,7 +174,6 @@ const ProductScreen = ({ history, match }) => {
                 </ListGroup>
               </Col>
             </Row>
-
             <Row>
               <Col md={3}></Col>
               <Col>
@@ -269,7 +243,6 @@ const ProductScreen = ({ history, match }) => {
                             </Col>
                           </Row>
                         </Form.Group>
-
                         <Button
                           className='mt-2 text-start'
                           disabled={loadingProductReview}
@@ -296,7 +269,3 @@ const ProductScreen = ({ history, match }) => {
 };
 
 export default ProductScreen;
-
-/**
- *
- */

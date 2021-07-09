@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import AdminNav from '../../../components/nav/AdminNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategory, updateCategory } from '../../../actions/categoryActions';
 import CategoryForm from '../../../components/forms/CategoryForm';
-import { CATEGORY_UPDATE_RESET } from '../../../constants/categoryConstants';
 import { Link } from 'react-router-dom';
 import FormContainer from '../../../components/FormContainer';
 import { useHistory } from 'react-router-dom';
@@ -14,7 +12,6 @@ const CategoryUpdate = ({ match }) => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => ({ ...state.userLogin.userInfo }));
   const UpdateCategory = useSelector((state) => ({ ...state.UpdateCategory }));
-  const { success: successUpdate } = UpdateCategory;
   const { category } = useSelector((state) => {
     return { ...state.getCategory };
   });
@@ -38,7 +35,6 @@ const CategoryUpdate = ({ match }) => {
       await dispatch(updateCategory(slug, { name }, userInfo.token));
       setLoading(false);
       setName('');
-      //window.location.href = '/category';
       history.push('/admin/category');
     } catch (error) {
       console.log(error);
@@ -73,6 +69,3 @@ const CategoryUpdate = ({ match }) => {
 };
 
 export default CategoryUpdate;
-/**
- *
- */

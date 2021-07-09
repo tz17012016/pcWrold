@@ -1,7 +1,6 @@
 import React from 'react';
-
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Container, Image } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomeScreen from './screens/HomeScreen';
@@ -42,7 +41,6 @@ const App = () => {
         <Container>
           <Switch>
             <Route exact path='/order/:id' component={OrderScreen} />
-
             <Route exact path='/shipping' component={ShippingScreen} />
             <Route exact path='/Shop' component={ShopScreen} />
             <Route exact path='/Shop/category/:slug' component={ShopScreen} />

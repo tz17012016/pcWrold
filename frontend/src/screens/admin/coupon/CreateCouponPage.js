@@ -16,13 +16,10 @@ const CreateCouponPage = () => {
   const [expiry, setExpiry] = useState('');
   const [discount, setDiscount] = useState('');
   const [loading, setLoading] = useState(false);
-  // const [coupons, setCoupons] = useState([]);
 
-  // redux
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => ({ ...state.userLogin.userInfo }));
   const { coupons } = useSelector((state) => ({ ...state.couponsList }));
-  console.log(coupons);
 
   useEffect(() => {
     loadAllCoupons();
@@ -36,10 +33,9 @@ const CreateCouponPage = () => {
     try {
       e.preventDefault();
       setLoading(true);
-      console.log(name, expiry, discount);
       dispatch(createCoupon({ name, expiry, discount }, userInfo.token));
       setLoading(false);
-      loadAllCoupons(); // load all coupons
+      loadAllCoupons();
       setName('');
       setDiscount('');
       setExpiry('');
@@ -53,7 +49,7 @@ const CreateCouponPage = () => {
       try {
         setLoading(true);
         dispatch(removeCoupon(couponId, userInfo.token));
-        loadAllCoupons(); // load all coupons
+        loadAllCoupons();
         setLoading(false);
       } catch (error) {
         console.log(error);

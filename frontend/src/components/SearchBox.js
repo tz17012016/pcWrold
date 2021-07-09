@@ -1,12 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { Input, Space } from 'antd';
-import { AudioOutlined } from '@ant-design/icons';
 import { SearchOutlined } from '@ant-design/icons';
 
-const { Search } = Input;
 const SearchBox = () => {
   const dispatch = useDispatch();
   const { search } = useSelector((state) => ({ ...state }));

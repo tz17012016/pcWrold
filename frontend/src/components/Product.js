@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, Col, Row, Button, ListGroup } from 'react-bootstrap';
-import { setVisibleTrue, setVisibleFalse } from '../actions/sideDrawerAction';
+import { setVisibleTrue } from '../actions/sideDrawerAction';
 import { addToCart } from '../actions/cartActions';
 import Rating from './Rating';
 

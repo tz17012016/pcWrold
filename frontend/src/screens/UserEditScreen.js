@@ -10,16 +10,12 @@ import { USER_UPDATE_RESET } from '../constants/userConstants';
 
 const UserEditScreen = ({ match, history }) => {
   const userId = match.params.id;
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
-
   const dispatch = useDispatch();
-
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
-
   const userUpdate = useSelector((state) => state.userUpdate);
   const {
     loading: loadingUpdate,

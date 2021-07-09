@@ -20,7 +20,6 @@ const Wishlist = () => {
   };
   useEffect(() => {
     loadWishlist();
-    console.log('render!');
   }, []);
 
   const handleRemove = (productId) => {

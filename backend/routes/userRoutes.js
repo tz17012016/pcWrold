@@ -28,6 +28,5 @@ router
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser);
-// todo user coupon
 
 export default router;

@@ -50,7 +50,7 @@ const AdminNav = () => (
       </li>
 
       <li className='nav-item rounded'>
-        <Link to='/admin/UserProfile' className='nav-link'>
+        <Link to='/UserProfile' className='nav-link'>
           עדכון סיסמה
         </Link>
       </li>

@@ -3,18 +3,12 @@ import AdminNav from '../../../components/nav/AdminNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../../actions/categoryActions';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import {
-  createSub,
-  getSub,
-  removeSub,
-  getSubs,
-} from '../../../actions/subActions';
+import { createSub, removeSub, getSubs } from '../../../actions/subActions';
 import { Link } from 'react-router-dom';
 import CategoryForm from '../../../components/forms/CategoryForm';
 import LocalSearch from '../../../components/forms/LocalSearch';
 import { Container } from 'react-bootstrap';
 import UserNav from '../../../components/nav/UserNav';
-import FormContainer from '../../../components/FormContainer';
 
 const SubCreate = () => {
   const dispatch = useDispatch();
@@ -23,11 +17,9 @@ const SubCreate = () => {
   const { categories } = CategoryList;
   const subsList = useSelector((state) => ({ ...state.subsList }));
   const { subs } = subsList;
-
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState('');
-  // step 1
   const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
@@ -46,10 +38,8 @@ const SubCreate = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      // console.log(name);
       setLoading(true);
       await dispatch(createSub({ name, parent: category }, userInfo.token));
-      // console.log(res)
       setLoading(false);
       setName('');
       loadSubs();
@@ -60,8 +50,6 @@ const SubCreate = () => {
   };
 
   const handleRemove = async (slug) => {
-    // let answer = window.confirm("Delete?");
-    // console.log(answer, slug);
     if (window.confirm('Delete?')) {
       try {
         setLoading(true);
@@ -75,7 +63,6 @@ const SubCreate = () => {
     }
   };
 
-  // step 4
   const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
 
   return (
@@ -88,7 +75,6 @@ const SubCreate = () => {
             ) : (
               <h4 className='text-center'>קטגוריות משנה</h4>
             )}
-
             <div className='form-group'>
               <label>קטגוריית הורה</label>
               <select
@@ -104,17 +90,12 @@ const SubCreate = () => {
                   ))}
               </select>
             </div>
-
             <CategoryForm
               handleSubmit={handleSubmit}
               name={name}
               setName={setName}
             />
-
-            {/* step 2 and step 3 */}
             <LocalSearch keyword={keyword} setKeyword={setKeyword} />
-
-            {/* step 5 */}
             {subs.length > 1 &&
               subs.filter(searched(keyword)).map((sub) => (
                 <div className='alert alert-secondary ' key={sub._id}>
@@ -142,53 +123,3 @@ const SubCreate = () => {
 };
 
 export default SubCreate;
-/**
- * <div className='container-fluid'>
-      <div className='row'>
-        <div className='col-md-2'>
-          <AdminNav />
-        </div>
-        <div className='col'>
-          {loading ? (
-            <h4 className='text-danger'>Loading..</h4>
-          ) : (
-            <h4>Create sub category</h4>
-          )}
-
-          <div className='form-group'>
-            <label>Parent category</label>
-            <select
-              name='category'
-              className='form-control'
-              onChange={(e) => {
-                return setParentId(e.target.value);
-              }}>
-              <option>Please select</option>
-              {categories.length > 0 &&
-                categories.map((c) => (
-                  <option key={c._id} value={c._id}>
-                    {c.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          <CategoryForm
-            handleSubmit={handleSubmit}
-            name={name}
-            setName={setName}
-          />
-
-          {/* step 2 and step 3 */
-// <LocalSearch keyword={keyword} setKeyword={setKeyword} />
-
-/*  {/* step 5 */
-/* {subs ? (
-            subs.filter(searched(keyword)).map((sub) => red(sub))
-          ) : (
-            <p>empty</p>
-          )}
-        </div>
-      </div>
-    </div>
- */

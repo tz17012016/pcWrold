@@ -6,9 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import { listMyOrders } from '../../actions/orderActions';
-import { Link } from 'react-router-dom';
 
-import InvoiceView from '../../components/order/InvoiceView';
 import AdminNav from '../../components/nav/AdminNav';
 import UserNav from '../../components/nav/UserNav';
 
@@ -55,11 +53,11 @@ const History = ({ history }) => {
                     className='table-sm'>
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>DATE</th>
-                        <th>TOTAL</th>
-                        <th>PAID</th>
-                        <th>DELIVERED</th>
+                        <th>מספר הזמנה</th>
+                        <th>תאריך</th>
+                        <th>סכך הכל</th>
+                        <th>שולם</th>
+                        <th>נישלח</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -88,12 +86,9 @@ const History = ({ history }) => {
                             )}
                           </td>
                           <td>
-                            <InvoiceView order={order} />
-                          </td>
-                          <td>
                             <LinkContainer to={`/order/${order._id}`}>
                               <Button className='btn-sm' variant='light'>
-                                Details
+                                פרטים
                               </Button>
                             </LinkContainer>
                           </td>

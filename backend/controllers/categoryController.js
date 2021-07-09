@@ -7,8 +7,6 @@ import slugify from 'slugify';
 const createCategory = asyncHandler(async (req, res) => {
   try {
     const { name } = req.body;
-    // const category = await new Category({ name, slug: slugify(name) }).save();
-    // res.json(category);
     res.json(await new Category({ name, slug: slugify(name) }).save());
   } catch (err) {
     console.log(err);
@@ -22,7 +20,6 @@ const listOfCategory = asyncHandler(async (req, res) =>
 
 const readCategory = asyncHandler(async (req, res) => {
   let category = await Category.findOne({ slug: req.params.slug }).exec();
-  // res.json(category);
   const products = await Product.find({ category }).populate('category').exec();
 
   res.json({

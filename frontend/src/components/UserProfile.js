@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Container, Button, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -12,7 +10,7 @@ import AdminNav from './nav/AdminNav';
 import UserNav from './nav/UserNav';
 import FormContainer from './FormContainer';
 
-const UserProfile = ({ location, history, match }) => {
+const UserProfile = ({ history }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);

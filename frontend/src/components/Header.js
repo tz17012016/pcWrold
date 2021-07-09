@@ -1,15 +1,13 @@
-/*jshint esversion: 6 */
 import React, { useEffect } from 'react';
 import SearchBox from './SearchBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { logout } from '../actions/userActions';
-import { switchTheme } from '../actions/themeActions';
 import { Route } from 'react-router-dom';
 import { setVisibleTrue } from '../actions/sideDrawerAction';
 import { getCategories } from '../actions/categoryActions';
-import { Button, Radio } from 'antd';
+import { Button } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import {
   UserOutlined,
@@ -246,6 +244,3 @@ const Header = () => {
 };
 
 export default Header;
-
-/**<button onClick={() => themeTogglerChange()}>Change Theme</button> */
-// <span className='badge bg-secondary'>{cartItems.length}</span>

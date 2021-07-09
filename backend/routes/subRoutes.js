@@ -1,10 +1,8 @@
 import express from 'express';
 const router = express.Router();
 
-// middlewares
 import { protect, admin } from '../middleware/authMiddleware.js';
 
-// controller
 import {
   listOfSubs,
   createSubs,
@@ -13,7 +11,6 @@ import {
   removeSubs,
 } from '../controllers/subController.js';
 
-// routes
 router.route('/').get(listOfSubs);
 router.route('/sub').post(protect, admin, createSubs);
 router

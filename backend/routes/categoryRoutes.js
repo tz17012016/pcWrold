@@ -1,10 +1,8 @@
 import express from 'express';
 const router = express.Router();
 
-// middlewares
 import { protect, admin } from '../middleware/authMiddleware.js';
 
-// controller
 import {
   createCategory,
   readCategory,
@@ -14,7 +12,6 @@ import {
   getSubs,
 } from '../controllers/categoryController.js';
 
-// routes
 router.route('/').get(listOfCategory);
 router.route('/category').post(protect, admin, createCategory);
 router.route('/category/:slug').get(readCategory);

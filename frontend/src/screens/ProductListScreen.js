@@ -15,19 +15,15 @@ import AdminNav from '../components/nav/AdminNav';
 
 const ProductListScreen = ({ history, match }) => {
   const pageNumber = match.params.pageNumber || 1;
-
   const dispatch = useDispatch();
-
   const ProductsPopulated = useSelector((state) => state.ProductsPopulated);
   const { loading, error, products, page, pages } = ProductsPopulated;
-
   const productDelete = useSelector((state) => state.productDelete);
   const {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
   } = productDelete;
-
   const productCreate = useSelector((state) => state.productCreate);
   const {
     loading: loadingCreate,
@@ -35,17 +31,14 @@ const ProductListScreen = ({ history, match }) => {
     success: successCreate,
     product: createdProduct,
   } = productCreate;
-
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
-
     if (!userInfo || !userInfo.isAdmin) {
       history.push('/login');
     }
-
     if (successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`);
     } else {
@@ -83,7 +76,6 @@ const ProductListScreen = ({ history, match }) => {
             </Row>
             <div className='container-fluid row justify-content-center'>
               <Col md={4} className='text-right'></Col>
-
               {loadingDelete && <Loader />}
               {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
               {loadingCreate && <Loader />}
