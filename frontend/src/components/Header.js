@@ -70,7 +70,7 @@ const Header = () => {
             id='basic-navbar-nav'>
             <Nav className='ml-auto '>
               <NavDropdown className='text-end' title='קטגוריות' id='username'>
-                {categories.length != null &&
+                {categories?.length != null &&
                   categories.map((c) => (
                     <LinkContainer key={c._id} to={`/Shop/category/${c.slug}`}>
                       <NavDropdown.Item className='text-end'>
