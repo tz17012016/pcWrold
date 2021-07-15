@@ -28,7 +28,7 @@ const productSchema = mongoose.Schema(
       required: 'Name is required',
       text: true,
       minlength: [2, 'Too short'],
-      maxlength: [32, 'Too long'],
+      maxlength: [100, 'Too long'],
     },
     image: {
       type: String,
@@ -38,7 +38,7 @@ const productSchema = mongoose.Schema(
       type: String,
       required: 'Brand is required',
       minlength: [2, 'Too short'],
-      maxlength: [32, 'Too long'],
+      maxlength: [100, 'Too long'],
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,

@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema(
       unique: true,
       index: true,
       minlength: [2, 'Too short'],
-      maxlength: [32, 'Too long'],
+      maxlength: [100, 'Too long'],
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         'Please add a valid email',
@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, 'Please add a password'],
       minlength: [2, 'Too short'],
-      maxlength: [32, 'Too long'],
+      maxlength: [100, 'Too long'],
     },
     isAdmin: {
       type: Boolean,
