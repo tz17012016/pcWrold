@@ -55,7 +55,7 @@ const productSchema = mongoose.Schema(
       required: 'description is required',
       text: true,
       minlength: [2, 'Too short'],
-      maxlength: [32, 'Too long'],
+      maxlength: [5000, 'Too long'],
     },
     reviews: [reviewSchema],
     rating: {
