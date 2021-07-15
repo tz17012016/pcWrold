@@ -13,6 +13,8 @@ const subSchema = new mongoose.Schema(
       type: String,
       unique: true,
       lowercase: true,
+      minlength: [2, 'Too short'],
+      maxlength: [32, 'Too long'],
       index: true,
     },
     parent: {

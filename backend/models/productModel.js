@@ -25,8 +25,10 @@ const productSchema = mongoose.Schema(
     },
     name: {
       type: String,
-      required: true,
+      required: 'Name is required',
       text: true,
+      minlength: [2, 'Too short'],
+      maxlength: [32, 'Too long'],
     },
     image: {
       type: String,
@@ -34,7 +36,9 @@ const productSchema = mongoose.Schema(
     },
     brand: {
       type: String,
-      required: true,
+      required: 'Brand is required',
+      minlength: [2, 'Too short'],
+      maxlength: [32, 'Too long'],
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
@@ -48,8 +52,10 @@ const productSchema = mongoose.Schema(
     ],
     description: {
       type: String,
-      required: true,
+      required: 'description is required',
       text: true,
+      minlength: [2, 'Too short'],
+      maxlength: [32, 'Too long'],
     },
     reviews: [reviewSchema],
     rating: {
