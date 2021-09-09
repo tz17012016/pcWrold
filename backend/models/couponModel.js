@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import Joi from 'joi';
 const couponSchema = new mongoose.Schema(
   {
     name: {
@@ -13,16 +13,26 @@ const couponSchema = new mongoose.Schema(
     },
     expiry: {
       type: Date,
-      required: true,
+      required: 'expiry is required',
     },
     discount: {
       type: Number,
-      requred: true,
+      required: 'discount is required',
     },
   },
   { timestamps: true }
 );
 
 const Coupon = mongoose.model('Coupon', couponSchema);
+
+export const validateCoupon = (coupon) => {
+  let schema = Joi.object({
+    name: Joi.string().min(6).trim().uppercase().required(),
+    expiry: Joi.date().required(),
+    discount: Joi.number().positive().integer().min(1).max(99).required(),
+  });
+
+  return schema.validate(coupon);
+};
 
 export default Coupon;

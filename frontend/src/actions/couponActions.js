@@ -45,15 +45,16 @@ export const createCoupon = (coupon) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(`/api/coupons/coupon`, coupon, config);
-
+    console.log(data);
     dispatch({
       type: COUPON_CREATE_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    console.log(error.response);
     const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
+      error.response && error.response.data
+        ? error.response.data
         : error.message;
     if (message === 'Not authorized, token failed') {
       dispatch(logout());

@@ -43,6 +43,7 @@ export const CreateCouponReducer = (state = {}, action) => {
         coupon: action.payload,
       };
     case COUPON_CREATE_FAIL:
+      console.log(action);
       return {
         loading: false,
         error: action.payload,

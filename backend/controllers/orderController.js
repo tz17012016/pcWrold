@@ -1,7 +1,13 @@
 import asyncHandler from 'express-async-handler';
-import Order from '../models/orderModel.js';
+import Order, { validateOrder } from '../models/orderModel.js';
 
 const addOrderItems = asyncHandler(async (req, res) => {
+  console.log(req.body);
+  let { error } = validateOrder(req.body);
+  if (error) {
+    console.log(error.details.message);
+    return res.status(400).json(error.details[0]);
+  }
   const {
     orderItems,
     shippingAddress,
@@ -48,6 +54,11 @@ const getOrderById = asyncHandler(async (req, res) => {
 });
 
 const updateOrderToPaid = asyncHandler(async (req, res) => {
+  let { error } = validateOrder(req.body);
+  if (error) {
+    console.log(error.details.message);
+    return res.status(400).json(error.details[0]);
+  }
   const order = await Order.findById(req.params.id);
 
   if (order) {
@@ -70,6 +81,11 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 });
 
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
+  let { error } = validateOrder(req.body);
+  if (error) {
+    console.log(error.details.message);
+    return res.status(400).json(error.details[0]);
+  }
   const order = await Order.findById(req.params.id);
 
   if (order) {

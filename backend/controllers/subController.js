@@ -1,9 +1,14 @@
-import Sub from '../models/subModel.js';
+import Sub, { validateSub } from '../models/subModel.js';
 import Product from '../models/productModel.js';
 import asyncHandler from 'express-async-handler';
 import slugify from 'slugify';
 
 const createSubs = asyncHandler(async (req, res) => {
+  let { error } = validateSub(req.body);
+  if (error) {
+    console.log(error.details.message);
+    return res.status(400).json(error.details[0].message);
+  }
   try {
     const { name, parent } = req.body;
     res.json(await new Sub({ name, parent, slug: slugify(name) }).save());
@@ -30,6 +35,12 @@ const readSubs = asyncHandler(async (req, res) => {
 });
 
 const updateSubs = asyncHandler(async (req, res) => {
+  console.log(req.body);
+  let { error } = validateSub(req.body);
+  if (error) {
+    console.log(error.details.message);
+    return res.status(400).json(error.details[0].message);
+  }
   const { name, parent } = req.body;
   try {
     const updated = await Sub.findOneAndUpdate(

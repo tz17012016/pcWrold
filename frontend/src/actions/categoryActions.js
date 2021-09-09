@@ -53,6 +53,7 @@ export const getCategory = (slug) => async (dispatch) => {
 };
 
 export const createCategory = (category) => async (dispatch, getState) => {
+  console.log(category);
   try {
     dispatch({
       type: CATEGORY_CREATE_REQUEST,
@@ -73,15 +74,16 @@ export const createCategory = (category) => async (dispatch, getState) => {
       category,
       config
     );
-
+    console.log(data);
     dispatch({
       type: CATEGORY_CREATE_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    console.log(error.response);
     const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
+      error.response && error.response.data
+        ? error.response.data
         : error.message;
     if (message === 'Not authorized, token failed') {
       dispatch(logout());
@@ -115,15 +117,16 @@ export const updateCategory =
         category,
         config
       );
-
+      console.log(data);
       dispatch({
         type: CATEGORY_UPDATE_SUCCESS,
         payload: data,
       });
     } catch (error) {
+      console.log(error.response);
       const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
+        error.response && error.response.data
+          ? error.response.data
           : error.message;
       if (message === 'Not authorized, token failed') {
         dispatch(logout());

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import Joi from 'joi';
 
 const userSchema = mongoose.Schema(
   {
@@ -58,5 +59,51 @@ userSchema.pre('save', async function (next) {
 });
 
 const User = mongoose.model('User', userSchema);
+
+export const validateUser = (user) => {
+  let schema = Joi.object().keys({
+    name: Joi.string().min(2).max(32).trim().required(),
+    email: Joi.string()
+      .pattern(new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/))
+      .min(6)
+      .max(255)
+      .email()
+      .trim()
+      .required(),
+    password: Joi.string()
+      .pattern(new RegExp(/^[a-zA-Z0-9]{3,30}$/))
+      .min(6)
+      .max(10)
+      .trim()
+      .required(),
+    isAdmin: Joi.boolean().default(false).required(),
+  });
+  return schema.validate(user);
+};
+export const validateUserProfile = (user) => {
+  let schema = Joi.object().keys({
+    _id: Joi.string().alphanum().required(),
+    name: Joi.string().min(2).max(32).trim().required(),
+    email: Joi.string()
+      .pattern(new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/))
+      .min(6)
+      .max(255)
+      .email()
+      .trim()
+      .required(),
+    isAdmin: Joi.boolean().default(false).required(),
+  });
+  return schema.validate(user);
+};
+
+export const validateWishlist = (wishlist) => {
+  let schema = Joi.object()
+    .keys({
+      wishlist: Joi.array().items({ productId: Joi.string().alphanum() }),
+    })
+    .pattern(/./, Joi.any());
+
+  return schema.validate(wishlist);
+};
 
 export default User;

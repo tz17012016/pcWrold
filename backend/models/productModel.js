@@ -1,3 +1,4 @@
+import Joi from 'joi';
 import mongoose from 'mongoose';
 
 const reviewSchema = mongoose.Schema(
@@ -86,5 +87,25 @@ const productSchema = mongoose.Schema(
 );
 
 const Product = mongoose.model('Product', productSchema);
-
+export const validateUser = (user) => {
+  let schema = Joi.object().keys({
+    name: Joi.string().min(2).max(100).required('Name is required'),
+    image: Joi.string().required('Image is required'),
+    price: Joi.number().required('Price is required'),
+    brand: Joi.string().required('brand is required'),
+    category: Joi.objectId().required('category id is required'),
+    subs: Joi.objectId().required('category id is required'),
+    description: Joi.string().min(2).max(100).required('subs is required'),
+    countInStock: Joi.number().required('countInStock is required'),
+  });
+  return schema.validate(user);
+};
+export const validatReview = (user) => {
+  let schema = Joi.object().keys({
+    name: Joi.string().min(2).max(100).required('Name is required'),
+    rating: Joi.number().required('rating is required'),
+    comment: Joi.string().min(2).max(100).required('comment is required'),
+  });
+  return schema.validate(user);
+};
 export default Product;

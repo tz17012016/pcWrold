@@ -1,10 +1,16 @@
-import Category from '../models/categoryModel.js';
+import Category, { validateCategory } from '../models/categoryModel.js';
 import Product from '../models/productModel.js';
 import Sub from '../models/subModel.js';
 import asyncHandler from 'express-async-handler';
 import slugify from 'slugify';
 
 const createCategory = asyncHandler(async (req, res) => {
+  console.log(req.body);
+  let { error } = validateCategory(req.body);
+  if (error) {
+    console.log(error.details.message);
+    return res.status(400).json(error.details[0].message);
+  }
   try {
     const { name } = req.body;
     res.json(await new Category({ name, slug: slugify(name) }).save());
@@ -29,6 +35,11 @@ const readCategory = asyncHandler(async (req, res) => {
 });
 
 const updateCategory = asyncHandler(async (req, res) => {
+  let { error } = validateCategory(req.body);
+  if (error) {
+    console.log(error.details.message);
+    return res.status(400).json(error.details[0].message);
+  }
   const { name } = req.body;
   try {
     const updated = await Category.findOneAndUpdate(

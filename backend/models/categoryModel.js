@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import Joi from 'joi';
 const categorySchema = new mongoose.Schema(
   {
     name: {
@@ -20,5 +20,14 @@ const categorySchema = new mongoose.Schema(
 );
 
 const Category = mongoose.model('Category', categorySchema);
+
+export const validateCategory = (category) => {
+  let schema = Joi.object({
+    name: Joi.string().min(2).max(100).trim().required(),
+    slug: Joi.string().regex(/^[a-z0-9-]+$/, 'must be a valid slug'),
+  });
+
+  return schema.validate(category);
+};
 
 export default Category;

@@ -3,9 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../../actions/categoryActions';
 import { updateSub, getSub } from '../../../actions/subActions';
 import { Link } from 'react-router-dom';
-import CategoryForm from '../../../components/forms/CategoryForm';
 import FormContainer from '../../../components/FormContainer';
 import Loader from '../../../components/Loader';
+import Message from '../../../components/MessageTimer';
+import * as yup from 'yup';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+
+const schema = yup.object().shape({
+  name: yup
+    .string()
+    .min(2, 'שם קצר מדי - חייב להית 2 תווים לפחות')
+    .max(100, 'שם ארוך מדי - חייב להיות לכל היותר 100 תווים')
+    .trim()
+    .uppercase()
+    .required('חובה לרשום שם'),
+});
 
 const SubUpdate = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -16,10 +28,13 @@ const SubUpdate = ({ match, history }) => {
   const { sub } = geteSub;
   const CategoryList = useSelector((state) => ({ ...state.CategoryList }));
   const { categories } = CategoryList;
-
+  const { error, success } = useSelector((state) => ({ ...state.CreateSub }));
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [parent, setParent] = useState('');
+  const initialValues = {
+    name: '',
+  };
 
   useEffect(() => {
     loadCategories();
@@ -34,16 +49,19 @@ const SubUpdate = ({ match, history }) => {
     return await dispatch(getSub(match.params.slug));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (values, actions) => {
+    console.log(values);
+    const { name } = values;
     try {
       setLoading(true);
       dispatch(updateSub(match.params.slug, { name, parent }, userInfo.token));
       setLoading(false);
       setName('');
+      actions.resetForm();
       history.push('/admin/sub');
     } catch (error) {
       console.log(error);
+      actions.resetForm();
       setLoading(false);
     }
   };
@@ -62,13 +80,20 @@ const SubUpdate = ({ match, history }) => {
           ) : (
             <h4>עדכון קטגוריית משנה</h4>
           )}
-
+          {error && <Message variant='danger'>{error}</Message>}
+          {success && (
+            <Message variant='alert alert-success'>
+              קטגורייה נוצרה בהצלחה
+            </Message>
+          )}
           <div className='form-group'>
             <label>קטגוריית הורה</label>
             <select
               name='category'
               className='form-control'
-              onChange={(e) => setParent(e.target.value)}>
+              onChange={(e) => (
+                setParent(e.target.value), console.log(e.target.value)
+              )}>
               <option>אנא בחר</option>
               {categories.length > 0 &&
                 categories.map((c) => (
@@ -82,11 +107,49 @@ const SubUpdate = ({ match, history }) => {
             </select>
           </div>
 
-          <CategoryForm
-            handleSubmit={handleSubmit}
-            name={name}
-            setName={setName}
-          />
+          <Formik
+            initialValues={initialValues}
+            validationSchema={schema}
+            onSubmit={handleSubmit}>
+            {(formik) => {
+              const { errors, touched, isValid, dirty } = formik;
+              return (
+                <Form>
+                  <div className='form-group'>
+                    <label className='text-muted'>שם</label>
+                    <Field
+                      type='text'
+                      name='name'
+                      id='name'
+                      className={
+                        errors.name && touched.name
+                          ? 'input-error form-control'
+                          : 'form-control'
+                      }
+                    />
+                    <br />
+                    <ErrorMessage
+                      name='name'
+                      component='span'
+                      className='error text-danger'
+                    />
+                  </div>
+
+                  <button
+                    type='submit'
+                    className={
+                      !(dirty && isValid)
+                        ? 'btn btn-outline-primary disabled-btn'
+                        : 'btn btn-outline-primary'
+                    }
+                    disabled={!(dirty && isValid)}>
+                    שמור
+                  </button>
+                </Form>
+              );
+            }}
+          </Formik>
+          <br />
         </div>
       </FormContainer>
     </>

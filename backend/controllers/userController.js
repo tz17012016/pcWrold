@@ -1,6 +1,11 @@
 import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
 import User from '../models/userModel.js';
+import {
+  validateUser,
+  validateWishlist,
+  validateUserProfile,
+} from '../models/userModel.js';
 
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -109,6 +114,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 const updateUser = asyncHandler(async (req, res) => {
+  let { error } = validateUserProfile(req.body);
+  if (error) {
+    console.log(error.details.message);
+    return res.status(400).json(error.details[0].message);
+  }
   const user = await User.findById(req.params.id);
 
   if (user) {

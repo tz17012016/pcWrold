@@ -40,6 +40,9 @@ h2 {
 .overflow {
   z-index: 6;
 }
+.spase {
+  padding-left: 10px;
+}
 thead tr {
   position: sticky;
   top: 0;

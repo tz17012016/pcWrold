@@ -10,40 +10,73 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { DeleteOutlined } from '@ant-design/icons';
 import AdminNav from '../../../components/nav/AdminNav';
 import { Table } from 'react-bootstrap';
+import MessageTimer from '../../../components/MessageTimer';
+import * as yup from 'yup';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+
+const schema = yup.object().shape({
+  name: yup
+    .string()
+    .min(6, 'שם קצר מדי - חייב להית 6 תווים לפחות')
+    .max(12, 'שם ארוך מדי - חייב להיות לכל היותר 12 תווים')
+    .trim()
+    .uppercase()
+    .required('חובה לרשום שם'),
+  expiry: yup
+    .date()
+    .default(() => new Date())
+    .required('חובה לרשום תאריך'),
+  discount: yup
+    .number()
+    .min(1, 'אחוז הנחה חייב להיות  מ 1-99 ולא קטן יותר')
+    .max(99, 'אחוז הנחה חייב להיות  מ 1-99 ולא גדול יותר')
+    .integer('אחוז ההנחה חייב להיות מספר שלם')
+    .positive('אחוז ההנחה חייב להיות מספר חיובי')
+    .required('חובה לרשום את אחוז ההנחה'),
+});
 
 const CreateCouponPage = () => {
   const [name, setName] = useState('');
-  const [expiry, setExpiry] = useState('');
+  const [expiry, setExpiry] = useState(new Date());
   const [discount, setDiscount] = useState('');
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => ({ ...state.userLogin.userInfo }));
-  const { coupons } = useSelector((state) => ({ ...state.couponsList }));
-
+  const { coupons } = useSelector((state) => ({
+    ...state.couponsList,
+  }));
+  const { error, success } = useSelector((state) => ({
+    ...state.CreateCoupon,
+  }));
+  const initialValues = {
+    name: '',
+    discount: '',
+  };
   useEffect(() => {
     loadAllCoupons();
   }, [loading]);
-
+  console.log(error);
   const loadAllCoupons = async () => {
     return await dispatch(getCoupons());
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmitForm = (values, actions) => {
+    const { name, discount } = values;
     try {
-      e.preventDefault();
       setLoading(true);
       dispatch(createCoupon({ name, expiry, discount }, userInfo.token));
       setLoading(false);
       loadAllCoupons();
       setName('');
       setDiscount('');
-      setExpiry('');
+      setExpiry(new Date());
+      actions.resetForm();
     } catch (error) {
       console.log('create coupon err', error);
+      actions.resetForm();
     }
   };
-
   const handleRemove = (couponId) => {
     if (window.confirm('? האם למחוק')) {
       try {
@@ -66,43 +99,87 @@ const CreateCouponPage = () => {
           ) : (
             <h4>קופון</h4>
           )}
+          {error && <MessageTimer variant='danger'>{error}</MessageTimer>}
+          {success && (
+            <MessageTimer variant='alert alert-success'>
+              קופון נירשם בהצלחה
+            </MessageTimer>
+          )}
+          <Formik
+            initialValues={initialValues}
+            validationSchema={schema}
+            onSubmit={handleSubmitForm}>
+            {(formik) => {
+              const { errors, touched, isValid, dirty } = formik;
+              return (
+                <div className='container'>
+                  <Form>
+                    <div className='form-group'>
+                      <label className='text-muted'>תאריך תפוגה</label>
+                      <br />
+                      <DatePicker
+                        className='form-control overflow'
+                        selected={expiry}
+                        dateFormat='dd/MM/yyyy'
+                        isClearable
+                        onChange={(date) => setExpiry(date)}
+                      />
+                    </div>
+                    <div className='form-group'>
+                      <label className='text-muted'>שם הקופון</label>
+                      <Field
+                        type='text'
+                        name='name'
+                        id='name'
+                        className={
+                          errors.name && touched.name
+                            ? 'input-error form-control'
+                            : 'form-control'
+                        }
+                      />
+                      <br />
+                      <ErrorMessage
+                        name='name'
+                        component='span'
+                        className='error text-danger'
+                      />
+                    </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className='form-group'>
-              <label className='text-muted'>תאריך תפוגה</label>
-              <br />
-              <DatePicker
-                className='form-control overflow'
-                selected={new Date()}
-                value={expiry}
-                onChange={(date) => setExpiry(date)}
-                required
-              />
-            </div>
-            <div className='form-group'>
-              <label className='text-muted'>שם הקופון</label>
-              <input
-                type='text'
-                className='form-control'
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                autoFocus
-                required
-              />
-            </div>
-            <div className='form-group'>
-              <label className='text-muted'>הנחה באחוזים</label>
-              <input
-                type='text'
-                className='form-control'
-                onChange={(e) => setDiscount(e.target.value)}
-                value={discount}
-                required
-              />
-            </div>
+                    <div className='form-group'>
+                      <label className='text-muted'>הנחה באחוזים</label>
+                      <Field
+                        type='number'
+                        name='discount'
+                        id='discount'
+                        className={
+                          errors.discount && touched.discount
+                            ? 'input-error form-control'
+                            : 'form-control'
+                        }
+                      />
+                      <br />
+                      <ErrorMessage
+                        name='discount'
+                        component='span'
+                        className='error text-danger'
+                      />
+                    </div>
 
-            <button className='btn btn-outline-primary'>שמור</button>
-          </form>
+                    <button
+                      type='submit'
+                      className={
+                        !(dirty && isValid)
+                          ? 'btn btn-outline-primary disabled-btn'
+                          : 'btn btn-outline-primary'
+                      }
+                      disabled={!(dirty && isValid)}>
+                      שמור
+                    </button>
+                  </Form>
+                </div>
+              );
+            }}
+          </Formik>
 
           <br />
 

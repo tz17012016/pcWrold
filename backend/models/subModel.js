@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Joi from 'joi-oid';
 
 const subSchema = new mongoose.Schema(
   {
@@ -26,4 +27,13 @@ const subSchema = new mongoose.Schema(
 
 const Sub = mongoose.model('Sub', subSchema);
 
+export const validateSub = (sub) => {
+  let schema = Joi.object({
+    name: Joi.string().min(2).max(100).trim().required(),
+    slug: Joi.string().regex(/^[a-z0-9-]+$/, 'must be a valid slug'),
+    parent: Joi.objectId().required(),
+  });
+
+  return schema.validate(sub);
+};
 export default Sub;
