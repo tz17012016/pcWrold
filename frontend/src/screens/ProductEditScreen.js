@@ -10,7 +10,6 @@ import { getSubs } from '../actions/subActions';
 import { getCategories, getCategorySubs } from '../actions/categoryActions';
 import { listProductDetails, updateProduct } from '../actions/productActions';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
-import AdminNav from '../components/nav/AdminNav';
 import { Select as SelectA } from 'antd';
 import * as yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -83,7 +82,6 @@ const ProductEditScreen = ({ match, history }) => {
       subs.map((s) => {
         arr.push(s._id);
       });
-      console.log('ARR', arr);
     } else {
       setImage(product.image);
     }
@@ -119,7 +117,6 @@ const ProductEditScreen = ({ match, history }) => {
   };
 
   const submitHandler = (values) => {
-    console.log(values);
     const {
       name,
       price,
@@ -208,7 +205,6 @@ const ProductEditScreen = ({ match, history }) => {
                             mode='multiple'
                             name='subs'
                             id='subs'
-                            style={{ width: '100%' }}
                             className={`form-control text-center
                       ${
                         errors.image && touched.image
