@@ -1,7 +1,6 @@
 # pcWrold eCommerce Platform
 
- This is the finale project for my web bootcamp,
- an eCommerce platform built with the MERN stack & Redux.
+ADemo eCommerce platform built with the MERN stack & Redux.
 
  
 # Demo site
